@@ -5,6 +5,7 @@
 #include<sstream>
 #include <string>
 #include <cstring>
+#include "CodigoCesar.h"
 using namespace std;
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
@@ -43,6 +44,7 @@ bool validaNombre(string entrada){
 }
 
 int main(int argc, char** argv) {
+	CodigoCesar VariableQueUtilizareParaTodo;
 	char *nombre;
 	int avanza=0,tam;
 	string texto, mostrar, opc, temporal;
@@ -101,35 +103,16 @@ int main(int argc, char** argv) {
 	    	tam=texto.size();
 	      	//Comienza la codificacion.
 	    	tam=texto.size();
-	        for(int i=0;i<tam;i++){
-	        	if(texto[i]>64&&texto[i]<91){
-	        		texto[i]=texto[i]-((avanza%26)-1);
-					if(texto[i]>90){
-					    texto[i]=texto[i]-26;  
-				    }
-				    if(texto[i]<65){
-				        texto[i]=texto[i]+26;
-				    }
-				/*}else if(texto[i]>96&&texto[i]<123){
-	        		texto[i]=texto[i]-((avanza%26)-1);
-					if(texto[i]>122){
-					    texto[i]=texto[i]-26;  
-				    }
-				    if(texto[i]<97){
-				        texto[i]=texto[i]+26;
-				    }
-				Servía con minusculas tambien :c pero el profe no quiso.	
-				*/	
-				}
-	        }
-	        cout<<"Texto codificado a:\n"<<texto<<endl;
+	        VariableQueUtilizareParaTodo.setTextoCod(texto,avanza,tam);
+	        cout<<"Texto codificado a:\n"<<VariableQueUtilizareParaTodo.getTexto()<<endl;
 			system("pause");
 			system("cls");
 			bandera=0;
 			do{
 				fflush(stdin);
 			    bandera=0;   	
-			 	cout<<"Ingrese el nombre del archivo el que va a guardar su mensaje: ";
+			 	cout<<"Ingrese el nombre del archivo el que va a guardar su mensaje teniendo en cuenta que ";
+			 	cout<<"no se pueden ingresar los siguientes valores: <,>,?,:,|,/,*,\" \n\nR:";
 				getline(cin,temporal);
 				if(validaNombre(temporal)==false){
 			    	system("cls");
@@ -143,7 +126,7 @@ int main(int argc, char** argv) {
 			}while(bandera==0); 
 			ofstream archivo(nombre,std::ios::out|std::ios::trunc);
 			if(archivo.is_open()){
-				archivo<<texto;
+				archivo<<VariableQueUtilizareParaTodo.getTexto();
 			}else{
 				system("cls");
 				cout<<"No se pudo abrir el archivo"<<endl;
@@ -197,29 +180,10 @@ int main(int argc, char** argv) {
 				tam=texto.size();
 				if(archivo.is_open()){
 					band=true;
-			        for(int i=0;i<tam;i++){
-			        	if(texto[i]>64&&texto[i]<91){
-			        		texto[i]=texto[i]+((avanza%26)-1);
-							if(texto[i]>90){
-							    texto[i]=texto[i]-26;  
-						    }
-						    if(texto[i]<65){
-						        texto[i]=texto[i]+26;
-						    }
-						/*}else if(texto[i]>96&&texto[i]<123){
-			        		texto[i]=texto[i]+((avanza%26)-1);
-							if(texto[i]>122){
-							    texto[i]=texto[i]-26;  
-						    }
-						    if(texto[i]<97){
-						        texto[i]=texto[i]+26;
-						    }
-						Servía con minusculas tambien :c pero el profe no quiso.	
-						*/	
-						}
-			        }
+			        VariableQueUtilizareParaTodo.setTextoDecod(texto,avanza,tam);
+					
 			        system("cls");
-					cout<<"Mensaje decodificado:\n"<<texto;
+					cout<<"Mensaje decodificado:\n"<<VariableQueUtilizareParaTodo.getTexto();
 					system("pause");
 				}else{
 					system("cls");

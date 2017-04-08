@@ -19,16 +19,26 @@ class CodigoCesar{
 
 
 void CodigoCesar::setTextoCod(string tex, int numero, int tam){
-	
+	this->texto=tex;
 	for(int x=0; x<tam; x++){
 		if(this->texto[x]>64 && this->texto[x]<91){
 			this->texto[x]=this->texto[x]-((numero%26));
 			if(this->texto[x]<65){
 				this->texto[x]=this->texto[x]+26;
 			}
-		}	
+		}
+		
+		if(this->texto[x]==char(164)){
+			this->texto[x]=this->texto[x]-129;
+		}
+		
+		if(this->texto[x]==char(165)){
+			this->texto[x]=this->texto[x]-130;
+		}
+		
+			
 	}
-	this->texto=tex;
+	
 }
 
 void CodigoCesar::setTextoDecod(string tex, int numero, int tam){
@@ -40,6 +50,10 @@ void CodigoCesar::setTextoDecod(string tex, int numero, int tam){
 				this->texto[x]=this->texto[x]-26;
 			}
 		}
+	
+		if(this->texto[x]==char(35)){
+				this->texto[x]=this->texto[x]+130;
+			}
 	}
 }
 
